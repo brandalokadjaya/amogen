@@ -73,6 +73,8 @@
         <br>
         <button id="convertBtn" disabled>Convert to Sticker</button>
         <a id="downloadLink" class="download-link" style="display: none;">Download Sticker</a>
+        <br>
+        <button id="addToWA" style="display: none;">Add to WhatsApp</button>
     </div>
 
     <script>
@@ -80,8 +82,10 @@
         const videoPreview = document.getElementById('videoPreview');
         const convertBtn = document.getElementById('convertBtn');
         const downloadLink = document.getElementById('downloadLink');
+        const addToWA = document.getElementById('addToWA');
 
         let selectedVideo = null;
+        let stickerBlob = null;
 
         // Handle video input
         videoInput.addEventListener('change', (event) => {
@@ -137,10 +141,12 @@
 
                 canvas.toBlob((blob) => {
                     if (blob) {
+                        stickerBlob = blob;
                         const url = URL.createObjectURL(blob);
                         downloadLink.href = url;
                         downloadLink.download = 'sticker.webp';
                         downloadLink.style.display = 'inline';
+                        addToWA.style.display = 'inline';
                         convertBtn.textContent = 'Convert to Sticker';
                         convertBtn.disabled = false;
                     } else {
@@ -150,6 +156,27 @@
             });
 
             videoPreview.currentTime = 0.1; // Seek to first frame
+        });
+
+        // Add sticker to WhatsApp
+        addToWA.addEventListener('click', () => {
+            if (!stickerBlob) return;
+
+            const waData = {
+                files: [
+                    new File([stickerBlob], 'sticker.webp', { type: 'image/webp' })
+                ]
+            };
+
+            if (navigator.canShare && navigator.canShare(waData)) {
+                navigator.share(waData).then(() => {
+                    alert('Sticker added to WhatsApp successfully!');
+                }).catch((error) => {
+                    console.error('Error sharing sticker:', error);
+                });
+            } else {
+                alert('Your browser does not support sharing to WhatsApp.');
+            }
         });
     </script>
 </body>
