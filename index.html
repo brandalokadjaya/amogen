@@ -25,7 +25,7 @@
             height: 150px;
             font-family: sans-serif; /* Ganti dengan font standar yang lebih ringan */
             font-weight: normal; /* Mengurangi berat font */
-            font-size: 5px; /* Ukuran font dinamis berdasarkan lebar layar */
+            font-size: 12px; /* Ukuran font dinamis berdasarkan lebar layar */
             padding: 10px;
             border: 2px solid #ccc;
             border-radius: 5px;
@@ -36,7 +36,8 @@
             resize: none;
         }
         #fontSizeSlider {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px; /* Memberi ruang antara slider dan kotak teks */
             width: 100%;
         }
         #downloadButton {
@@ -65,11 +66,11 @@
         canvas {
             display: none;
         }
-
+        
         /* Responsif untuk layar kecil */
         @media screen and (max-width: 600px) {
             .text-box {
-                font-size: 14px; /* Menyesuaikan font di layar kecil */
+                font-size: 12px; /* Menyesuaikan font di layar kecil */
                 height: 120px; /* Menurunkan tinggi pada layar kecil */
             }
             #downloadButton {
@@ -91,8 +92,8 @@
 
     <div class="input-container">
         <img id="preview" alt="Pratinjau Gambar">
-        <textarea class="text-box" id="textInput" placeholder="Tulis kata-katamu di sini dan nanti akan otomatis menjadi gambar yang tinggal di tempelkan ke vidiomu..." oninput="generateImage()"></textarea>
         <input type="range" id="fontSizeSlider" min="50" max="150" value="100" oninput="generateImage()">
+        <textarea class="text-box" id="textInput" placeholder="Tulis kata-katamu di sini dan nanti akan otomatis menjadi gambar yang tinggal di tempelkan ke vidiomu..." oninput="generateImage()"></textarea>
         <button id="downloadButton" onclick="downloadImage()">Download PNG</button>
     </div>
     <canvas id="canvas" width="1080" height="1920"></canvas>
@@ -163,3 +164,4 @@
 
 </body>
 </html>
+
